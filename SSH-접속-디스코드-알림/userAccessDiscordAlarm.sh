@@ -7,13 +7,13 @@ TODAY=$(date +"%Y-%m-%d")
 
 # -------------------------------------------------------
 # A shell script that generates a MIT LICENSE file
-# Written by: Juny(juny8592@gmail.com)
+# Written by: Juny(junyharang8592@gmail.com)
 # Last updated on: 2023/09/13
 # -------------------------------------------------------
 
 # Source: http://opensource.org/licenses/MIT
 echo "[$ACCESS_DATE] [notice] The MIT License (MIT)"
-echo "[$ACCESS_DATE] [notice] Copyright (c) [2023] [juny(juny8592@gmail.com)]"
+echo "[$ACCESS_DATE] [notice] Copyright (c) 2023 juny(junyharang8592@gmail.com)"
 echo "[$ACCESS_DATE] [notice] Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the \"Software\"), to deal
 in the Software without restriction, including without limitation the rights
@@ -60,7 +60,7 @@ checkLogRelevant() {
   fi
 
   echo "====================================== [$ACCESS_DATE] SSH 접속 정보 Discord 알림 스크립트 동작 ======================================"  >> "$LOG_FILE" 2>&1
-  echo "@Author: Juny(juny8592@gmail.com)"  >> "$LOG_FILE" 2>&1
+  echo "@Author: Juny(junyharang8592@gmail.com)"  >> "$LOG_FILE" 2>&1
 
   licenseNotice
 }
@@ -166,7 +166,7 @@ useCurlSendDiscord() {
 }
 
 echo "====================================== [$ACCESS_DATE] SSH 접속 정보 Discord 알림 스크립트 동작 ======================================"
-echo "@Author: Juny(juny8592@gmail.com)"
+echo "@Author: Juny(junyharang8592@gmail.com)"
 
 checkLogRelevant
 
@@ -178,5 +178,5 @@ echo "[$ACCESS_DATE] ==== 접속 또는 접속 해제 대상 서버 정보 ===="
 echo "[$ACCESS_DATE] 접속 대상 서버: $HOSTNAME" >> "$LOG_FILE" 2>&1
 echo "[$ACCESS_DATE] 접속 대상 서버 IP: $SERVER_IP" >> "$LOG_FILE" 2>&1
 
-echo "@Author: Juny(juny8592@gmail.com)"  >> "$LOG_FILE" 2>&1
+echo "@Author: Juny(junyharang8592@gmail.com)"  >> "$LOG_FILE" 2>&1
 echo "====================================== [$ACCESS_DATE] SSH 접속 정보 Discord 알림 스크립트 작업 끝 ======================================"  >> "$LOG_FILE" 2>&1
