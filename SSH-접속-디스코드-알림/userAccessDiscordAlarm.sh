@@ -40,34 +40,6 @@ SERVER_OS_INFO=$(cat /etc/os-release | grep PRETTY_NAME | cut -d'"' -f2)
 LOG_DIR="/var/log/discord/webhook/accessAlarm/${TODAY}"
 LOG_FILE="${LOG_DIR}/sshAccessAlarm.log"
 
-checkScriptLocation() {
-  # 현재 작업 디렉토리 위치 정보를 가져옴
-  current_directory=$(pwd)
-
-  if [ "$current_directory" = "/etc/ssh" ]; then
-    echo "[$ACCESS_DATE] [info] Shell Script 위치가 정상이에요."
-
-    checkUserInfo
-  else
-    echo "[$ACCESS_DATE] [error] Shell Script 위치는 /etc/ssh에 위치해야 합니다."
-    exit 1
-  fi
-}
-
-checkUserInfo() {
-  echo "[$ACCESS_DATE] [info] Shell Script 실행 계정이 root인지 확인할게요."
-
-  if [[ $EUID -ne 0 ]]; then
-      echo "[$ACCESS_DATE] [error] 해당 Shell Script는 root로 실행시켜야 합니다."
-      exit 1
-
-  else
-      echo "[$NOW] [info] Shell Script가 root 계정으로 실행 되었어요."
-
-      checkLogRelevant
-  fi
-}
-
 checkLogRelevant() {
   echo "[$ACCESS_DATE] [info] Log가 쌓일 Directory가 존재하는지 확인할게요."
 
@@ -87,12 +59,13 @@ checkLogRelevant() {
      fi
   fi
 
+  echo "====================================== [$ACCESS_DATE] SSH 접속 정보 Discord 알림 스크립트 동작 ======================================"  >> "$LOG_FILE" 2>&1
+  echo "@Author: Juny(juny8592@gmail.com)"  >> "$LOG_FILE" 2>&1
+
   licenseNotice
 }
 
 licenseNotice() {
-  echo "====================================== [$ACCESS_DATE] SSH 접속 정보 Discord 알림 스크립트 동작 ======================================"  >> "$LOG_FILE" 2>&1
-  echo "@Author: Juny(juny8592@gmail.com)"  >> "$LOG_FILE" 2>&1
 
   echo "[$ACCESS_DATE] [notice] 해당 Shell Script License에 대한 내용 고지합니다. 숙지하시고, 사용 부탁드립니다."
   echo "[$ACCESS_DATE] [notice] 해당 Shell Script License에 대한 내용 고지합니다. 숙지하시고, 사용 부탁드립니다."  >> "$LOG_FILE" 2>&1
@@ -116,7 +89,35 @@ licenseNotice() {
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE." >> "$LOG_FILE" 2>&1
 
-  accessSshUserProcess
+  checkScriptLocation
+}
+
+checkScriptLocation() {
+  # 현재 작업 디렉토리 위치 정보를 가져옴
+  current_directory=$(pwd)
+
+  if [ "$current_directory" = "/etc/ssh" ]; then
+    echo "[$ACCESS_DATE] [info] Shell Script 위치가 정상이에요." >> "$LOG_FILE" 2>&1
+
+    checkUserInfo
+  else
+    echo "[$ACCESS_DATE] [error] Shell Script 위치는 /etc/ssh에 위치해야 합니다. \n 현재 Shell Script 위치: $current_directory" >> "$LOG_FILE" 2>&1
+    exit 1
+  fi
+}
+
+checkUserInfo() {
+  echo "[$ACCESS_DATE] [info] Shell Script 실행 계정이 root인지 확인할게요." >> "$LOG_FILE" 2>&1
+
+  if [[ $EUID -ne 0 ]]; then
+      echo "[$ACCESS_DATE] [error] 해당 Shell Script는 root로 실행시켜야 합니다." >> "$LOG_FILE" 2>&1
+      exit 1
+
+  else
+      echo "[$ACCESS_DATE] [info] Shell Script가 root 계정으로 실행 되었어요." >> "$LOG_FILE" 2>&1
+
+      accessSshUserProcess
+  fi
 }
 
 accessSshUserProcess() {
@@ -146,8 +147,6 @@ accessSshUserProcess() {
 }
 
 useCurlSendDiscord() {
-  # curl을 이용하여 디스코드 웹훅 메시지 전송
-
   echo "[$ACCESS_DATE] Discord로 SSH 접속 정보 알림 메시지 전송 작업을 시작 합니다." >> "$LOG_FILE" 2>&1
 
   curl -H "Content-Type: application/json" -d "{
@@ -169,7 +168,7 @@ useCurlSendDiscord() {
 echo "====================================== [$ACCESS_DATE] SSH 접속 정보 Discord 알림 스크립트 동작 ======================================"
 echo "@Author: Juny(juny8592@gmail.com)"
 
-checkScriptLocation
+checkLogRelevant
 
 echo "[$ACCESS_DATE] ==== 접속 또는 접속 해제 사용자 정보 ====" >> "$LOG_FILE" 2>&1
 echo "[$ACCESS_DATE] 접속자 계정: $USER" >> "$LOG_FILE" 2>&1
