@@ -4,9 +4,10 @@ set -e
 
 ACCESS_DATE=$(date +"%Y-%m-%d %T")
 TODAY=$(date +"%Y-%m-%d")
+VERSION="1.0.0"
 
 # -------------------------------------------------------
-# A shell script that generates a MIT LICENSE file
+# SSH Access Web Hook Notification
 # Written by: Juny(junyharang8592@gmail.com)
 # Last updated on: 2023/09/13
 # -------------------------------------------------------
@@ -59,7 +60,7 @@ checkLogRelevant() {
      fi
   fi
 
-  echo "====================================== [$ACCESS_DATE] SSH 접속 정보 Discord 알림 스크립트 동작 ======================================"  >> "$LOG_FILE" 2>&1
+  echo "====================================== [$ACCESS_DATE] SSH 접속 정보 Discord 알림 스크립트 동작 v.$VERSION ======================================"  >> "$LOG_FILE" 2>&1
   echo "@Author: Juny(junyharang8592@gmail.com)"  >> "$LOG_FILE" 2>&1
 
   licenseNotice
@@ -72,7 +73,7 @@ licenseNotice() {
 
   echo "[$ACCESS_DATE] http://opensource.org/licenses/MIT \n" "$LOG_FILE" 2>&1
   echo "[$ACCESS_DATE] [notice] The MIT License (MIT) \n" >> "$LOG_FILE" 2>&1
-  echo "[$ACCESS_DATE] [notice] Copyright (c) [2023] [juny(juny8592@gmail.com)] \n" >> "$LOG_FILE" 2>&1
+  echo "[$ACCESS_DATE] [notice] Copyright (c) 2023 juny(juny8592@gmail.com) v.$VERSION \n" >> "$LOG_FILE" 2>&1
   echo "[$ACCESS_DATE] [notice] Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the \"Software\"), to deal
   in the Software without restriction, including without limitation the rights
@@ -165,8 +166,8 @@ useCurlSendDiscord() {
   fi
 }
 
-echo "====================================== [$ACCESS_DATE] SSH 접속 정보 Discord 알림 스크립트 동작 ======================================"
-echo "@Author: Juny(junyharang8592@gmail.com)"
+echo "====================================== [$ACCESS_DATE] SSH 접속 정보 Discord 알림 스크립트 동작 v.$VERSION ======================================"
+echo "@Author: Juny(junyharang8592@gmail.com) v.$VERSION"
 
 checkLogRelevant
 
@@ -178,5 +179,5 @@ echo "[$ACCESS_DATE] ==== 접속 또는 접속 해제 대상 서버 정보 ===="
 echo "[$ACCESS_DATE] 접속 대상 서버: $HOSTNAME" >> "$LOG_FILE" 2>&1
 echo "[$ACCESS_DATE] 접속 대상 서버 IP: $SERVER_IP" >> "$LOG_FILE" 2>&1
 
-echo "@Author: Juny(junyharang8592@gmail.com)"  >> "$LOG_FILE" 2>&1
-echo "====================================== [$ACCESS_DATE] SSH 접속 정보 Discord 알림 스크립트 작업 끝 ======================================"  >> "$LOG_FILE" 2>&1
+echo "@Author: Juny(junyharang8592@gmail.com) v.$VERSION"  >> "$LOG_FILE" 2>&1
+echo "====================================== [$ACCESS_DATE] SSH 접속 정보 Discord 알림 스크립트 작업 끝 v.$VERSION ======================================"  >> "$LOG_FILE" 2>&1
